@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie Wordle!</title>
-    <script type="module" src="index.js"></script>
-    <script type="module" defer src="main.js"></script>
+    <script src="./JS/config.js"></script>
+    <script defer src="./JS/main.js"></script>
     <link rel="stylesheet" href="CSS/style.css" />
   </head>
   <body>
@@ -18,56 +18,74 @@
       </div>
       <div id="game">
         <header>
-          <h1 class="title">MOVIELE</h1>
+          <h1 class="title">CINEDLE</h1>
         </header>
         <div id="guess-div">
-          <input id="input" type="text" placeholder="Enter a Movie" autocomplete="off" required>
-        <ul class="list"></ul>
+          <input
+            id="input"
+            type="text"
+            placeholder="Enter a Movie"
+            autocomplete="off"
+            required
+          />
+          <ul class="list"></ul>
         </div>
-      <div id="table-container">
-        <h2 id="final-score"></h2>
-      <table id="table">
-        <thead>
-          <tr>
-              <th id="name">Name</th>
-              <th class="category">Release Date</th>
-              <th class="category">Genres</th>
-              <th class="category">Lead Actor</th>
-              <th class="category">Director</th>
-              <th class="category">Studio</th>
-              <th class="category">Rating</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-          </tbody>
-        </table>
+        <div id="table-container">
+          <h2 id="final-score"></h2>
+          <table id="table">
+            <thead>
+              <tr>
+                <th class="category">Name</th>
+                <th class="category">Release Date</th>
+                <th class="category">Genres</th>
+                <th class="category">Lead Actor</th>
+                <th class="category">Director</th>
+                <th class="category">Studio</th>
+                <th class="category">Rating</th>
+                <th id="synopsis">Synopsis</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
       </div>
       <div id="how-to-play-modal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
           <span class="close" id="close-how-to-play">&times;</span>
-          <h2 id="how-to-play-header">How to Play Moviele</h2>
+          <h2 id="how-to-play-header">How to Play Cinedle</h2>
           <ul id="how-to-play-list">
-            <li class="how-to-play-points">You have 6 guesses</li>
+            <li class="how-to-play-points">You have 7 guesses</li>
             <li class="how-to-play-points">
-              <span class="green-box">Green</span> in any column indicates a match!
+              <span class="green-box">Green</span> in any column indicates a
+              match!
             </li>
             <li class="how-to-play-points">
-              <span class="yellow-box">Yellow</span> in Release Date column indicates 5 years within the movie's release date.
+              <span class="yellow-box">Yellow</span> in Release Date column
+              indicates 5 years within the movie's release date.
             </li>
             <li class="how-to-play-points">
-              <span class="yellow-box">Yellow</span> in Genres column indicates one of the same genres as the movie's.
+              <span class="yellow-box">Yellow</span> in Genres column indicates
+              one of the same genres as the movie's.
             </li>
             <li class="how-to-play-points">
-              <span class="yellow-box">Yellow</span> in Lead Actor column indicates the first letter of the first or last name is the same as the movie's lead actor.
+              <span class="yellow-box">Yellow</span> in Lead Actor column
+              indicates the first letter of the first or last name is the same
+              as the movie's lead actor.
             </li>
             <li class="how-to-play-points">
-              <span class="yellow-box">Yellow</span> in Director column indicates the first letter of the first or last name is the same as the movie's director.
+              <span class="yellow-box">Yellow</span> in Director column
+              indicates the first letter of the first or last name is the same
+              as the movie's director.
             </li>
             <li class="how-to-play-points">
-              <span class="yellow-box">Yellow</span> in Rating column indicates 0.5 within the movie's rating out of 10.
+              <span class="yellow-box">Yellow</span> in Rating column indicates
+              0.5 within the movie's rating out of 10.
             </li>
-            <li class="how-to-play-points">There is a movie daily at <strong>12 AM EST</strong>.</li>
+            <li class="how-to-play-points">The Synopsis gets one word longer every time you make a guess.</li>
+            <li class="how-to-play-points">
+              There is a movie daily at <strong>12 AM EST</strong>.
+            </li>
           </ul>
         </div>
       </div>
@@ -75,15 +93,15 @@
         <!-- Modal content -->
         <div class="modal-content">
           <span class="close" id="close-stats">&times;</span>
-  
+
           <h2>STATISTICS</h2>
-  
+
           <h3><strong>Total</strong>: <span id="total-played"></span></h3>
-  
+
           <h3><strong>Wins</strong>: <span id="total-wins"></span></h3>
-  
+
           <h3><strong>Win %</strong>: <span id="win-pct"></span></h3>
-  
+
           <h3>
             <strong>Current Streak</strong>: <span id="current-streak"></span>
           </h3>
@@ -93,14 +111,57 @@
         <!-- Modal content -->
         <div class="modal-content">
           <span class="close" id="close-credit">&times;</span>
-  
-          <h2>CREDIT</h2></br>
-  
-          <h3>This product uses the TMDB API but is not endorsed or certified by TMDB. All movie data is from <a href="https://www.themoviedb.org/" target="_blank">https://www.themoviedb.org/</a></h3></br>
 
-          <img src="./Images/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" id="credit">
+          <h2>CREDIT</h2>
+          <br />
 
+          <h3>
+            This product uses the TMDB API but is not endorsed or certified by
+            TMDB. All movie data is acquired from
+            <a href="https://www.themoviedb.org/" target="_blank"
+              >https://www.themoviedb.org/</a
+            >
+          </h3>
+          <br />
+
+          <img
+            src="./Images/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
+            id="credit"
+          />
         </div>
       </div>
-    </body>
-  </html>
+      <div id="win-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close" id="close-win">&times;</span>
+
+          <h1 id="correct-movie"></h1>
+          <br />
+
+          <button class="share-button" onclick="shareResult();">Share</button
+          ><br /><br />
+
+          <h2 class="share-text" style="visibility: hidden">
+            Movie copied to clipboard
+          </h2>
+        </div>
+      </div>
+      <div id="lost-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close" id="close-lost">&times;</span>
+
+          <h1 id="incorrect-movie"></h1>
+          <br />
+
+          <button class="share-button" onclick="shareResult();">Share</button
+          ><br /><br />
+
+          <h2 class="share-text" style="visibility: hidden">
+            Movie copied to clipboard
+          </h2>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
