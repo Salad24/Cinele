@@ -6,10 +6,10 @@ let movieGuessGenres = [];
 let currentMovieIndex = 0;
 let guessedMovieCount = 0;
 let haveGuessed = false;
-const API_KEY = config.my_API_TOKEN;
+const API_KEY = "f7a6d5bf4a00273d6cda5447d0fce446";
 const SEARCH_API = "https://api.themoviedb.org/3/search/movie?&api_key=" + API_KEY + "&query=";
 const now = new Date();
-const firstDate = new Date(2022, 4, 5, 0, 0, 0, 0);
+const firstDate = new Date(2022, 4, 7, 0, 0, 0, 0);
 const desiredCurrentMovieIndex = Math.floor(
   Number(now - firstDate) / 1000 / 60 / 60 / 24
 );
@@ -1063,6 +1063,13 @@ function checkIfPlayedYesterday() {
     window.localStorage.setItem("currentMovieIndex", currentMovieIndex);
     movie = movieAnswers[currentMovieIndex];
   }
+  else if ((desiredCurrentMovieIndex + 1) < currentMovieIndex) {
+    clearBoard();
+    resetGameState();
+    currentMovieIndex = desiredCurrentMovieIndex;
+    window.localStorage.setItem("currentMovieIndex", currentMovieIndex);
+    movie = movieAnswers[currentMovieIndex];
+  }
 }
 
 function loadHowToPlay() {
@@ -1106,10 +1113,10 @@ if (desiredCurrentMovieIndex != currentMovieIndex) {
   const currentStreak = window.localStorage.getItem("currentStreak") || 0;
   if (currentStreak == 0) {
     finalResultEl.textContent =
-      "Cinedle " + (desiredCurrentMovieIndex + 1) + " - Unsuccessful Today!";
+      "Cinedle #" + (desiredCurrentMovieIndex + 1) + " - Unsuccessful Today!";
   } else {
     finalResultEl.textContent =
-      "Cinedle " + (desiredCurrentMovieIndex + 1) + " - You Win!";
+      "Cinedle #" + (desiredCurrentMovieIndex + 1) + " - You Win!";
   }
 }
 
@@ -1648,18 +1655,45 @@ function initLostModal() {
   });
 }
 
-function shareResult() {
-  let string = "Cinele " + guessedMovieCount + "/7\n";
+function shareWinResult() {
+  let string = "Cinele #" + (desiredCurrentMovieIndex + 1) + " - " + guessedMovieCount + "/7\n";
   for (let i = 0; i < guessedMovieCount; i++) {
     string += "\n";
     for (let j = 0; j < 7; j++) {
       if (
-        document.getElementById("table-body").rows[g].cells[h].style
+        document.getElementById("table-body").rows[i].cells[j].style
           .backgroundColor === "rgb(14, 159, 110)"
       ) {
         string += "\uD83D\uDFE9";
       } else if (
-        document.getElementById("table-body").rows[g].cells[h].style
+        document.getElementById("table-body").rows[i].cells[j].style
+          .backgroundColor === "rgb(252, 202, 21)"
+      ) {
+        string += "\uD83D\uDFE8";
+      } else {
+        string += "\u2B1C";
+      }
+    }
+  }
+  navigator.clipboard.writeText(string).then(function () {
+    const shareTexts = document.querySelectorAll(".share-text");
+    for (let i = 0; i < shareTexts.length; i++) {
+      shareTexts[i].style.visibility = "visible";
+    }
+  });
+}
+function shareLostResult() {
+  let string = "Cinele #" + (desiredCurrentMovieIndex + 1) + " - " + "X/7\n";
+  for (let i = 0; i < guessedMovieCount; i++) {
+    string += "\n";
+    for (let j = 0; j < 7; j++) {
+      if (
+        document.getElementById("table-body").rows[i].cells[j].style
+          .backgroundColor === "rgb(14, 159, 110)"
+      ) {
+        string += "\uD83D\uDFE9";
+      } else if (
+        document.getElementById("table-body").rows[i].cells[j].style
           .backgroundColor === "rgb(252, 202, 21)"
       ) {
         string += "\uD83D\uDFE8";
