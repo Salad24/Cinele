@@ -22,7 +22,8 @@ body {
   justify-content: center;
   width: 100%;
   background-color: darkgrey;
-  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 #how-to-play-button,
@@ -192,7 +193,7 @@ ul {
 }
 
 #table {
-  width: 80vw;
+  width: 100vw;
   margin-top: 30px;
   align-self: center;
   text-align: center;
@@ -202,4 +203,34 @@ ul {
 }
 .category {
   width: 12%;
+}
+
+@media (max-width: 480px) {
+  #table {
+    font-size: 0.3rem
+  }
+}
+
+@media (min-width: 481px) {
+  #table {
+    font-size: 0.4rem
+  }
+}
+
+@media (min-width: 769px) {
+  #table {
+    font-size: 0.6rem
+  }
+}
+
+@media (min-width: 1025px) {
+  #table {
+    font-size: 0.8rem
+  }
+}
+
+@media (min-width: 1201px) {
+  #table {
+    font-size: 1rem;
+  }
 }

@@ -1702,6 +1702,8 @@ function shareLostResult() {
       }
     }
   }
+  string += "\n\nhttps://salad24.github.io/Cinele";
+  
   navigator.clipboard.writeText(string).then(function () {
     const shareTexts = document.querySelectorAll(".share-text");
     for (let i = 0; i < shareTexts.length; i++) {
