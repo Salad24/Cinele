@@ -1019,14 +1019,15 @@ initCreditModal();
 loadHowToPlay();
 loadLocalStorage();
 getMovieAnswer(SEARCH_API + movie + "&include_adult=false");
+gameRefresher();
 
 function initLocalStorage() {
-  const storedcurrentMovieIndex =
+  const storedCurrentMovieIndex =
     window.localStorage.getItem("currentMovieIndex");
-  if (!storedcurrentMovieIndex) {
+  if (!storedCurrentMovieIndex) {
     window.localStorage.setItem("currentMovieIndex", desiredCurrentMovieIndex);
   } else {
-    currentMovieIndex = Number(storedcurrentMovieIndex);
+    currentMovieIndex = Number(storedCurrentMovieIndex);
     movie = movieAnswers[currentMovieIndex];
   }
 
@@ -1097,31 +1098,40 @@ function loadHowToPlay() {
     });
   }
 }
+function gameRefresher() {
+  if (desiredCurrentMovieIndex === currentMovieIndex && haveGuessed == "false") {
+    //This is the case whenever a movie has not been guessed
 
-if (desiredCurrentMovieIndex === currentMovieIndex && haveGuessed == "false") {
-  //This is the case whenever a movie has not been guessed
+    //Should run when the indexes are the same and there is no guess
+    clearBoard();
+    resetGameState();
+  }
 
-  //Should run when the indexes are the same and there is no guess
-  clearBoard();
-  resetGameState();
-}
+  if (guessedMovieCount > 7)
+   {
+     // This is the case when the guessed movie count is greater than 7
+     clearBoard();
+     resetGameState();
+   }
 
-if (desiredCurrentMovieIndex != currentMovieIndex) {
-  document.getElementById("input").style.visibility = "hidden";
-  document.getElementsByClassName("list")[0].style.visibility = "hidden";
-  const finalResultEl = document.getElementById("final-score");
-  const currentStreak = window.localStorage.getItem("currentStreak") || 0;
-  if (currentStreak == 0) {
-    finalResultEl.textContent =
-      "Cinedle #" + (desiredCurrentMovieIndex + 1) + " - Unsuccessful Today!";
-  } else {
-    finalResultEl.textContent =
-      "Cinedle #" + (desiredCurrentMovieIndex + 1) + " - You Win!";
+  if (desiredCurrentMovieIndex != currentMovieIndex) {
+    document.getElementById("input").style.visibility = "hidden";
+    document.getElementsByClassName("list")[0].style.visibility = "hidden";
+    const finalResultEl = document.getElementById("final-score");
+    const currentStreak = window.localStorage.getItem("currentStreak") || 0;
+    if (currentStreak == 0) {
+      finalResultEl.textContent =
+        "Cinedle #" + (desiredCurrentMovieIndex + 1) + " - Unsuccessful Today!";
+    } else {
+      finalResultEl.textContent =
+        "Cinedle #" + (desiredCurrentMovieIndex + 1) + " - You Win!";
+    }
   }
 }
 
 function resetGameState() {
   window.localStorage.removeItem("guessedMovieCount");
+  guessedMovieCount = 0;
   window.localStorage.removeItem("table");
   window.localStorage.removeItem("haveGuessed");
 }
@@ -1170,7 +1180,7 @@ function updateMovieIndex() {
   window.localStorage.setItem("currentMovieIndex", currentMovieIndex);
 }
 
-function updateCinedleStatus() {
+function updateCineleStatus() {
   haveGuessed = true;
   window.localStorage.setItem("haveGuessed", haveGuessed);
 }
@@ -1366,7 +1376,7 @@ input.addEventListener("input", function () {
 });
 
 function submitGuess() {
-  updateCinedleStatus();
+  updateCineleStatus();
   input.value = "";
   let tableRow = document.createElement("tr");
   document.querySelector("#table-body").appendChild(tableRow);
